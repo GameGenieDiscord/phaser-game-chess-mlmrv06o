@@ -112,8 +112,12 @@ function generatePseudo(piece, x, y, board) {
   };
   if (me === 'p') {
     const dir = isWhite ? -1 : 1;
+    const startRow = isWhite ? 6 : 1;
     if (y + dir >= 0 && y + dir < 8) {
-      if (empty(board[y + dir][x])) moves.push({ x, y: y + dir });
+      if (empty(board[y + dir][x])) {
+        moves.push({ x, y: y + dir });
+        if (y === startRow && empty(board[y + 2 * dir][x])) moves.push({ x, y: y + 2 * dir });
+      }
       if (x > 0 && enemy(board[y + dir][x - 1])) moves.push({ x: x - 1, y: y + dir });
       if (x < 7 && enemy(board[y + dir][x + 1])) moves.push({ x: x + 1, y: y + dir });
     }
